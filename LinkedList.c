@@ -20,6 +20,7 @@ node allocate(void)
 		fprintf(stderr, "Unable to allocate memory\n");
 		exit(1);
 	}
+	ptr->_next = NULL;
 	return(ptr);
 }
 
@@ -38,6 +39,7 @@ void push_back(node head,int val){
 		head = alloc();
 		head->_val = val;
 		*(head->_size) = 1;
+		head->_next = NULL;
 		return;
 	}
 	node ptr = head;
@@ -69,11 +71,29 @@ void pop_back(node head) {
 }
 
 void push_front(node head, int val) {
-
+	if (head == NULL) {
+		head = allocate();
+		head->_val = val;
+		*(head->_size) = 1;
+	}
+	iterator temp = head;
+	head = allocate();
+	head->_val = val;
+	head->_size = temp->_size;
+	*(head->_size) = *(head->_size) + 1;
+	head->_next = temp;
 }
 
 void pop_front(node head) {
-
+	if (head == NULL) {
+		// error
+		exit(1);
+	}
+	
+	iterator temp = head;
+	head = head->_next;
+	*(temp->_size) = *(temp->_size) - 1;
+	free(temp);
 }
 
 
