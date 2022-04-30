@@ -5,16 +5,16 @@
 
 // for now only int type
 typedef struct{
-	int* _size;
 	int _val;
 	struct item* _next;
 }item;
 
 typedef item* node;
-
-node allocate(void)
+typedef node iterator;
+node allocate(int* _size)
 {
 	node ptr;
+	(*_size)++;
 	ptr = (node)malloc(sizeof(item) * 1);
 	if (ptr == NULL) {
 		fprintf(stderr, "Unable to allocate memory\n");
@@ -24,8 +24,8 @@ node allocate(void)
 	return(ptr);
 }
 
-void output(node head) {
-	node ptr = head;
+void output(linkedList* _llist) {
+	iterator ptr = _llist->_head;
 	puts("\n");
 	while (ptr != NULL) {
 		printf("%d ", ptr->_val);
@@ -34,58 +34,61 @@ void output(node head) {
 	puts("\n");
 }
 
-void push_back(node head,int val){
+void push_back(linkedList* _llist,int val){
+	node head = _llist->_head;
 	if (head == NULL) {
 		head = alloc();
 		head->_val = val;
-		*(head->_size) = 1;
 		head->_next = NULL;
 		return;
 	}
-	node ptr = head;
+	iterator ptr = head;
 	while (ptr != NULL) {
 		ptr = ptr->_next;
 	}
-	ptr = allocate();
+	ptr = allocate(&_llist->_size);
 	ptr->_val = val;
-	*(head->_size) = *(head->_size) + 1;
-
 }
 
-typedef node iterator;
-void pop_back(node head) {
-	iterator t = head;
-	while (t->_next != NULL) {
-		t = t->_next;
-	}
-	if (t == head) {
+void pop_back(linkedList* _llist) {
+	node head = _llist->_head;
+	if (head != NULL) {
+		iterator t = head;
+		while (t->_next != NULL) {
+			t = t->_next;
+		}
+
+		if (t == head) {
+			free(t);
+			head = NULL;
+			_llist->_size--;
+			return;
+		}
+		iterator temp = t;
 		free(t);
-		head = NULL;
-		*(head->_size) = 0;
-		return 0;
+		temp = NULL;
+		_llist->_size--;
 	}
-	iterator temp = t;
-	free(t);
-	temp = NULL;
-	*(head->_size) = *(head->_size) - 1;
+	else {
+		// error
+	}
 }
 
-void push_front(node head, int val) {
+void push_front(linkedList* _llist, int val) {
+	node head = _llist->_head;
 	if (head == NULL) {
-		head = allocate();
+		head = allocate(&_llist->_size);
 		head->_val = val;
-		*(head->_size) = 1;
+		return;
 	}
 	iterator temp = head;
-	head = allocate();
+	head = allocate(&_llist->_size);
 	head->_val = val;
-	head->_size = temp->_size;
-	*(head->_size) = *(head->_size) + 1;
 	head->_next = temp;
 }
 
 void pop_front(node head) {
-	if (head == NULL) {
+/*	if (head == NULL) {
 		// error
 		exit(1);
 	}
@@ -94,6 +97,7 @@ void pop_front(node head) {
 	head = head->_next;
 	*(temp->_size) = *(temp->_size) - 1;
 	free(temp);
+*/
 }
 
 
@@ -104,10 +108,12 @@ typedef struct {
 	node _head;
 	size_t _size;
 	void(*print)(void);
-	void(*push_back)(node head,int val);
-	void(*pop_back)(node head);
-	void(*pop_front)(node head);
-	void(*push_front)(node head, int val);
+	void(*push_back)(linkedList* _llist,int val);
+	void(*pop_back)(linkedList* _llist);
+	void(*pop_front)(linkedList* _llist);
+	void(*push_front)(linkedList* _llist, int val);
+//	void(*push_back)(int val);
+
 }linkedList;
 
 void initLinkeedList(linkedList* l) {
@@ -116,5 +122,4 @@ void initLinkeedList(linkedList* l) {
 	l->push_back = push_back;
 	l->_head = NULL;
 	l->_size = 0;
-	l->_head->_size = l->_size;
 }
