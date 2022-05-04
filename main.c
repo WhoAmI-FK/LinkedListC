@@ -7,6 +7,9 @@ int main()
 	push_back(ll,10);
 	push_back(ll,20);
 	output(ll);
+	pop_back(ll);
+	pop_back(ll);
+	output(ll);
 	free(ll);
 	return 1;
 }
