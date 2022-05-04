@@ -52,19 +52,18 @@ void output(struct linkedList* _llist) {
 }
 
 void push_back(struct linkedList* _llist,int val){
-	struct item* ptr;
-	if (_llist->_head == NULL) {
+	struct item* ptr = _llist->_head;
+	if (ptr == NULL) {
 		(*_llist)._head = allocate();
 		_llist->_head->_val = val;
 		_llist->_head->_next = NULL;
 		return;
 	}
-	ptr = _llist->_head;
-	while (ptr != NULL) {
+	while (ptr->_next != NULL) {
 		ptr = ptr->_next;
 	}
-	ptr = allocate();
-	ptr->_val = val;
+	ptr->_next = allocate();
+	ptr->_next->_val = val;
 }
 
 void pop_back(struct linkedList* _llist) {
