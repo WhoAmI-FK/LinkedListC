@@ -57,6 +57,7 @@ void push_back(struct linkedList* _llist,int val){
 		(*_llist)._head = allocate();
 		_llist->_head->_val = val;
 		_llist->_head->_next = NULL;
+		_llist->_size++;
 		return;
 	}
 	while (ptr->_next != NULL) {
@@ -64,6 +65,7 @@ void push_back(struct linkedList* _llist,int val){
 	}
 	ptr->_next = allocate();
 	ptr->_next->_val = val;
+	_llist->_size++;
 }
 
 void pop_back(struct linkedList* _llist) {
@@ -102,17 +104,20 @@ void pop_back(struct linkedList* _llist) {
 }
 
 void push_front(struct linkedList* _llist, int val) {
-	struct item* temp;
-	struct item* head = _llist->_head;
-	if (head == NULL) {
-		head = allocate();
-		head->_val = val;
+	struct item* ptr;
+	if(_llist->_head==NULL){
+		(*_llist)._head = allocate();
+		_llist->_head->_val = val;
+		_llist->_head->_next = NULL;
+		_llist->_size++;
 		return;
 	}
-	 temp = head;
-	head = allocate();
-	head->_val = val;
-	head->_next = temp;
+	ptr = allocate();
+	ptr->_val = val;
+	ptr->_next = _llist->_head;
+	_llist->_head = ptr;
+	_llist->_size++;
+	return;	
 }
 
 void pop_front(struct linkedList* _llist) {

@@ -4,8 +4,12 @@
 int main()
 {
 	linkedList* ll =initLinkedList();
-	push_back(ll,10);
+/*	push_back(ll,10);
 	push_back(ll,20);
+	push_front(ll,33);
+
+*/
+
 	output(ll);
 	pop_back(ll);
 	pop_back(ll);
