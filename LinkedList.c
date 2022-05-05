@@ -131,11 +131,22 @@ void pop_front(struct linkedList* _llist) {
 	*(temp->_size) = *(temp->_size) - 1;
 	free(temp);
 */
-
-	struct item* head = _llist->_head;
-	if (head == NULL) {
-		exit(1);
+	if(_llist->_head==NULL){
+		// error;
+		return;
 	}
+	
+	struct item* ptr = _llist->_head;
+	if(_llist->_head->_next==NULL){
+		_llist->_size--;
+		deallocate(ptr);
+		_llist->_head = NULL;
+		return;
+	}
+	_llist->_head = _llist->_head->_next;
+	deallocate(ptr);
+	_llist->_size--;
+	return;
 }
 
 

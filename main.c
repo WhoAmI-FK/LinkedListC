@@ -10,9 +10,12 @@ int main()
 
 */
 
+	push_front(ll,10);
+	push_front(ll,20);
 	output(ll);
-	pop_back(ll);
-	pop_back(ll);
+	pop_front(ll);
+	output(ll);
+	pop_front(ll);
 	output(ll);
 	free(ll);
 	return 1;
