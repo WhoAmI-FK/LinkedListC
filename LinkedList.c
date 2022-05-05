@@ -226,3 +226,14 @@ void clear(struct linkedList* _llist){
 	_llist->_size = 0;
 }
 
+int search(struct linkedList* _llist,int val){
+	unsigned long passes = 0;
+	struct item* ptr = _llist->_head;
+	while(passes!=_llist->_size){
+	if(ptr->_val == val) return 1;
+	ptr = ptr->_next;
+	passes++;	
+	}
+	return 0;
+}
+

@@ -9,3 +9,4 @@ void pop_front(struct linkedList* _llist);
 void deleteNode(struct linkedList* _llist, int key);
 int at(struct linkedList* _llist, unsigned long index);
 void clear(struct linkedList* _llist);
+int search(struct linkedList* _llist,int val);

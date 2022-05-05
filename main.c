@@ -12,9 +12,7 @@ int main()
 
 	push_front(ll,10);
 	push_front(ll,20);
-	output(ll);
-	clear(ll);
-	output(ll);
+	printf("%s",search(ll,50)==1 ? "Yes there is" : "No there is no");
 	free(ll);
 	
 	return 1;
