@@ -150,6 +150,39 @@ void pop_front(struct linkedList* _llist) {
 }
 
 
+void deleteNode(struct linkedList* _llist, int key){
+	if(_llist->_head!=NULL){
+	struct item* ptr = _llist->_head;
+	if(ptr->_val == key){
+		if(ptr->_next==NULL){
+			deallocate(ptr);
+			_llist->_size--;
+			_llist->_head = NULL;
+			return;
+		}
+		_llist->_head = _llist->_head->_next; 
+		deallocate(ptr);
+		_llist->_size--;
+		return;
+	}
+	while(ptr->_next->_val!=key){
+		ptr = ptr->_next;
+	}
+	struct item* temp = ptr->_next;
+	if(ptr->_next->_next!=NULL){
+		ptr->_next = ptr->_next->_next;
+		deallocate(temp);
+		_llist->_size--;
+		return;
+	}
+	deallocate(temp);
+	ptr->_next = NULL;
+	_llist->_size--;
+	return;
+	}
+}
+
+
 struct linkedList* initLinkedList() {
 	struct linkedList* l = (struct linkedList*)malloc(sizeof(struct linkedList));
 	l->allocate = allocate;
