@@ -13,8 +13,9 @@ int main()
 	push_front(ll,10);
 	push_front(ll,20);
 	output(ll);
-	deleteNode(ll,10);
+	clear(ll);
 	output(ll);
 	free(ll);
+	
 	return 1;
 }

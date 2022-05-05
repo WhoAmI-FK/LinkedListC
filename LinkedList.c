@@ -182,6 +182,21 @@ void deleteNode(struct linkedList* _llist, int key){
 	}
 }
 
+int at(struct linkedList* _llist, unsigned long index){
+	if(index > _llist->_size || index<0){
+		// error
+		
+		exit(1);
+	}else{
+		unsigned long i=0;
+		struct item* ptr = _llist->_head;	
+		while(i!=index){
+			ptr = ptr->_next;
+			i++;
+		}
+		return ptr->_val;
+	}
+}
 
 struct linkedList* initLinkedList() {
 	struct linkedList* l = (struct linkedList*)malloc(sizeof(struct linkedList));
@@ -194,5 +209,20 @@ struct linkedList* initLinkedList() {
 	l->_head = NULL;
 	l->_size = 0;
 	return l;
+}
+
+void r_clear(struct item*& node){
+	if(node==NULL){
+		return;
+	}
+	r_clear(node->_next);
+	struct item* tmp = node;
+	free(tmp);
+	node = NULL;
+}
+
+void clear(struct linkedList* _llist){
+	r_clear(_llist->_head);
+	_llist->_size = 0;
 }
 
